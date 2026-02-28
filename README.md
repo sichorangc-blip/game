@@ -32,15 +32,43 @@
 - **표준 산출물(JSON)**: 자동 저장/대시보드 연결 가능
 - **사람 검토 지점(Human-in-the-loop)**: 광고 집행, 실제 게시 예약 전 승인
 
-## 3) 빠른 시작
+## 3) 실행 방법 (가장 쉬운 순서)
+
+### 방법 A: 설치 없이 바로 실행
 
 ```bash
-python3 scripts/run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+cd /workspace/game
+make run-demo
 ```
 
-실행 시 `docs/sample_report.json` 형식의 결과를 터미널에 출력합니다.
+- 내부적으로 `PYTHONPATH=src python3 scripts/run_demo.py ...`를 실행합니다.
 
-## 4) 실제 확장 포인트
+### 방법 B: CLI 설치 후 실행 (추천)
+
+```bash
+cd /workspace/game
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+ai-team-demo --goal "신규 반려동물 간식 브랜드 런칭"
+```
+
+### 방법 C: 기존 스크립트 직접 실행
+
+```bash
+cd /workspace/game
+PYTHONPATH=src python3 scripts/run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+```
+
+실행 후 결과는 콘솔에 출력되고 기본적으로 `docs/sample_report.json` 파일에도 저장됩니다.
+
+## 4) 결과 파일 위치 바꾸기
+
+```bash
+ai-team-demo --goal "신규 반려동물 간식 브랜드 런칭" --save docs/my_report.json
+```
+
+## 5) 실제 확장 포인트
 
 1. LLM API 연동(OpenAI, Azure OpenAI, Anthropic 등)
 2. 외부 데이터 연동
@@ -51,9 +79,8 @@ python3 scripts/run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
 3. 작업 큐(Celery/RQ) + DB(PostgreSQL)
 4. 관리자 대시보드(FastAPI + Next.js)
 
-## 5) 추천 운영 규칙
+## 6) 추천 운영 규칙
 
 - 모든 산출물에 `근거(source)` 필드 포함
 - 실행성 높은 항목에 `priority`, `owner`, `due_date` 지정
 - 반복 업무는 스케줄러(cron)로 자동 생성
-
