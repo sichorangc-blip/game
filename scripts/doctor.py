@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import platform
 import shutil
+import subprocess
 from pathlib import Path
 
 
@@ -20,6 +21,20 @@ CHECKS = [
 ]
 
 CLI_BINS = ["node", "npm", "pnpm", "codex", "claude", "gemini", "opencode"]
+
+
+def check_codex_auth() -> None:
+    if not shutil.which("codex"):
+        return
+    try:
+        proc = subprocess.run(["codex", "whoami"], capture_output=True, text=True, timeout=5)
+        out = (proc.stdout or proc.stderr).strip()
+        if proc.returncode == 0 and out:
+            print(f"[doctor] codex auth: OK ({out})")
+        else:
+            print("[doctor] codex auth: NOT AUTHENTICATED (run: codex login)")
+    except Exception:
+        print("[doctor] codex auth: UNKNOWN (run: codex whoami)")
 
 
 def main() -> int:

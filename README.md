@@ -172,6 +172,48 @@ where codex
 
 ---
 
+### 0-6) CLI가 Installed인데 Offline일 때 (화면처럼 `Not Authenticated`)
+
+지금 화면 상태는 원인이 명확합니다.
+
+- Codex CLI: `Installed`
+- Codex CLI: `Not Authenticated`
+- 우상단: `Offline`
+- 좌하단: `Disconnected`
+
+즉, 설치는 되었지만 **CLI 로그인(인증)이 안 끝나서** 에이전트가 연결되지 않은 상태입니다.
+
+해결 순서(Windows PowerShell):
+
+```powershell
+# 1) Codex CLI 로그인
+codex login
+
+# 2) 로그인 상태 확인
+codex whoami
+
+# 3) 앱 재시작 또는 Settings > CLI Tools > Refresh
+```
+
+그 다음 UI에서 꼭 할 것:
+
+1) Settings > API에서 OpenAI 키 저장 확인
+2) Office 화면에서 에이전트 클릭
+3) 각 에이전트의 CLI Tool을 `Codex CLI`로 지정
+4) 모델(provider/model) 지정 후 저장
+5) 좌하단 `Disconnected`가 `Connected`로 바뀌는지 확인
+
+`codex login`이 막히면:
+
+```powershell
+codex logout
+codex login
+```
+
+> 핵심: `Installed`만으로는 부족하고, `Authenticated` 상태가 되어야 Online/Connected로 올라옵니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
