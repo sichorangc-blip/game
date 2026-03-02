@@ -63,7 +63,9 @@ python --version
 
 ```powershell
 $env:PYTHONPATH = "src"
-python scripts/run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+python run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+# 또는
+python .\scripts\run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
 ```
 
 결과는 콘솔에 출력되고 기본적으로 `docs/sample_report.json`에 저장됩니다.
@@ -174,6 +176,8 @@ cd claw-empire
 
 ```powershell
 $env:PYTHONPATH = "src"
+python run_demo.py --goal "신규 가습마스크 브랜드 런칭"
+# 또는
 python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
@@ -192,11 +196,36 @@ cd claw-empire
 
 python --version
 $env:PYTHONPATH = "src"
+python run_demo.py --goal "신규 가습마스크 브랜드 런칭"
+# 또는
 python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
 위 순서로 하면 경로 꼬임 문제를 거의 100% 피할 수 있습니다.
 
+
+
+### Q8. 계속 같은 에러가 나면 (60초 점검)
+아래 4개를 PowerShell에 그대로 입력해 주세요.
+
+```powershell
+pwd
+Get-ChildItem
+Test-Path .\scripts\run_demo.py
+git remote -v
+```
+
+- `Test-Path`가 `False`면: 현재 폴더가 잘못됐거나, 다른 저장소입니다.
+- 이 경우 아래처럼 **새 폴더로 재클론**하는 게 가장 빠릅니다.
+
+```powershell
+cd C:\work
+git clone https://github.com/GreenSheep01201/claw-empire.git claw-empire-fresh
+cd claw-empire-fresh
+python run_demo.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+`python run_demo.py`는 루트 실행 파일이라 `PYTHONPATH`를 직접 안 넣어도 동작하도록 구성되어 있습니다.
 
 ---
 
