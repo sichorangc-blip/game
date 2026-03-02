@@ -214,6 +214,49 @@ codex login
 
 ---
 
+### 0-7) API Test가 `origin_not_allowed`일 때 + Codex 토큰 이슈
+
+지금 에러(`origin_not_allowed`)는 **키 자체가 틀린 에러가 아니라, 해당 API 키의 사용 출처(Origin/IP/Project 제한) 정책에 걸린 상태**입니다.
+
+#### A. `origin_not_allowed` 해결 순서
+
+1. OpenAI 콘솔에서 현재 키의 제한 정책 확인
+   - Allowed origins / Referrer 제한
+   - Project 제한(다른 프로젝트 키를 넣었는지)
+   - Organization/Project 매핑
+2. 가장 빠른 검증용으로 **제한 없는 새 테스트 키**를 발급
+3. 앱 Settings > API에서 기존 provider를 Edit
+   - Base URL: `https://api.openai.com/v1`
+   - Key 교체 후 Save
+4. 앱/서버 재시작 후 Test 재실행
+
+PowerShell에서 키 자체 체크(앱 바깥 검증):
+
+```powershell
+$env:OPENAI_API_KEY="sk-..."
+curl https://api.openai.com/v1/models -H "Authorization: Bearer $env:OPENAI_API_KEY"
+```
+
+- 여기서도 실패하면 키/프로젝트 제한 문제입니다.
+- 여기서는 성공하는데 앱에서만 실패하면 앱 요청 Origin 제한 문제입니다.
+
+#### B. Codex `whoami`에서 토큰이 쓰이는 이유
+
+`codex whoami`도 내부적으로 Codex 세션/모델을 통해 실행되어 **입출력 토큰이 집계**됩니다.
+- `cached` 토큰은 할인/캐시 경로로 처리될 수 있지만 사용량 표시는 됩니다.
+- 완전 무과금 확인이 필요하면 API 호출 없는 로컬 명령(`where`, `echo`)로 점검하세요.
+
+#### C. 아직 Disconnected일 때 마지막 확인
+
+1. Settings > CLI Tools: Codex가 `Installed + Authenticated`인지
+2. Settings > API: Test가 성공하는 provider 1개 이상인지
+3. Agent별로 CLI Tool=Codex, Provider=OpenAI를 지정했는지
+4. 서버 로그에 `/api/cli-status`, `/api/agents` 200 응답이 뜨는지
+
+> 요약: 지금 막힘의 1순위는 `origin_not_allowed`(키 정책)이며, 이게 풀려야 Connected가 안정적으로 올라옵니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
