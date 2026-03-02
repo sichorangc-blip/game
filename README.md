@@ -88,6 +88,47 @@ python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런�
 
 ---
 
+### 0-4) `git ls-tree`가 둘 다 빈 출력이면 (지금 상황)
+
+당신이 방금 보낸 것처럼 아래 두 명령이 아무것도 안 나오면,
+
+```powershell
+git ls-tree -r --name-only origin/main | findstr /i "run_demo.py auto_bootstrap.py"
+git ls-tree -r --name-only origin/dev  | findstr /i "run_demo.py auto_bootstrap.py"
+```
+
+의미는 하나입니다: **원격 main/dev 어디에도 해당 파일이 존재하지 않습니다.**
+
+즉, 지금 저장소는 `run_demo.py` 방식이 아니라 원래 저장소의 실행 방식(프론트/서버)으로 실행해야 합니다.
+
+바로 다음 단계:
+
+```powershell
+cd C:\work\claw-empire
+corepack enable
+pnpm install
+pnpm dev
+```
+
+`pnpm`이 없거나 막히면:
+
+```powershell
+npm install
+npm run dev
+```
+
+그리고 서버가 따로 필요한 구조면(현재 폴더에 `server` 디렉터리 존재):
+
+```powershell
+cd .\server
+npm install
+npm run dev
+```
+
+> 요약: 지금은 파일이 없어서 막힌 게 맞고, 당신 잘못이 아닙니다. 이 저장소는 Node 실행 경로로 가야 합니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
