@@ -303,13 +303,21 @@ Provider가 삭제/저장이 안 되거나 상태가 안 바뀌면, 보통 서�
 ```powershell
 # 1) 실행 중인 dev 서버 중지 (실행 창에서 Ctrl+C)
 
-# 2) 포트 점유 프로세스 강제 종료
+# 2) 포트 점유 PID 확인
 netstat -ano | findstr :8000
 netstat -ano | findstr :8790
-# 마지막 PID를 확인해서 종료
-Stop-Process -Id <PID> -Force
 
-# 3) 프로젝트 루트에서 재실행
+# 3) 실제 숫자 PID로 종료 (예: 12345)
+Stop-Process -Id 12345 -Force
+
+# 또는 포트 기준 자동 종료(권장)
+$pid8790 = (Get-NetTCPConnection -LocalPort 8790 -State Listen -ErrorAction SilentlyContinue).OwningProcess
+if ($pid8790) { Stop-Process -Id $pid8790 -Force }
+
+$pid8000 = (Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue).OwningProcess
+if ($pid8000) { Stop-Process -Id $pid8000 -Force }
+
+# 4) 프로젝트 루트에서 재실행
 cd C:\work\claw-empire
 pnpm dev
 # (또는) npm run dev
