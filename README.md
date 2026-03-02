@@ -257,6 +257,41 @@ curl https://api.openai.com/v1/models -H "Authorization: Bearer $env:OPENAI_API_
 
 ---
 
+### 0-8) 새 키로도 `origin_not_allowed` + 저장이 안 될 때
+
+이 케이스는 보통 **키 자체 문제 + 앱 저장 플로우 문제**가 섞여 있습니다.
+
+#### A. 저장이 안 될 때 UI 순서
+
+1. 기존 provider에서 `Edit` 대신 `+ Add`로 새 provider를 추가
+2. 새 provider 이름을 다르게 지정 (예: `openai-new`)
+3. Base URL: `https://api.openai.com/v1`
+4. 키 붙여넣기 후 Save
+5. 기존 provider는 `Disable`만 하고 즉시 삭제하지 않기
+6. 브라우저 강력 새로고침(Ctrl+F5) 후 `Refresh`
+
+#### B. 앱 밖에서 키 자체 진단 (중요)
+
+```powershell
+$env:OPENAI_API_KEY="sk-..."
+python .\scripts\api_probe.py
+python .\scripts\api_probe.py --origin http://localhost:8000
+```
+
+- 둘 다 성공: 키 정상, 앱 쪽 origin/저장 로직 이슈
+- 첫 번째 실패: 키/프로젝트/조직 제한 이슈
+- 두 번째만 `origin_not_allowed`: Origin 제한 정책 이슈
+
+#### C. 앱 서버 쪽 점검
+
+- 서버 allowed origins에 `http://localhost:8000` / `http://127.0.0.1:8000` 포함
+- API 서버 재시작 후 Settings > API > Test 재실행
+- 여전히 실패하면 새 provider로 교체한 뒤 Agent 매핑을 새 provider로 변경
+
+> 핵심: `origin_not_allowed`는 대부분 키 오타가 아니라 정책 제한/Origin 검증 문제입니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
