@@ -63,6 +63,31 @@ python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런�
 
 ---
 
+
+### 0-3) 지금 당신 출력값 기준 "정답 명령" (origin/dev 존재)
+
+당신이 보낸 결과:
+- `main` 최신
+- `run_demo.py`, `scripts/run_demo.py`, `scripts/auto_bootstrap.py` 모두 `False`
+- `remotes/origin/dev` 존재
+
+=> 즉, 실행 파일은 `main`이 아니라 `dev` 쪽에 있습니다. 아래 **그대로** 실행하세요.
+
+```powershell
+cd C:\work\claw-empire
+git checkout dev
+git pull origin dev
+python -c "from pathlib import Path; print(Path('run_demo.py').exists(), Path('scripts/run_demo.py').exists(), Path('scripts/auto_bootstrap.py').exists())"
+python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+위 4번째 줄이 `True`를 포함하면 정상입니다.
+
+> 만약 `git checkout dev`에서 로컬 변경 충돌이 나면:
+> `git stash -u` → `git checkout dev` → `git pull origin dev` 순서로 진행하세요.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
