@@ -136,6 +136,48 @@ python scripts/run_demo.py --goal "테스트" --save "C:\work\output\report.json
 ### Q4. Node만 쓰던 사람도 가능?
 가능합니다. `npm run demo`로 시작하면 됩니다.
 
+
+### Q5. Python 3.12인데 괜찮아?
+네. 이 프로젝트는 `requires-python = ">=3.10"`이라 Python 3.12도 지원 범위입니다.
+
+### Q6. `can't open file ... scripts\run_demo.py` 에러가 나와요
+이 에러는 Python 버전 문제가 아니라 **현재 위치에 `scripts/run_demo.py`가 없다는 뜻**입니다.
+
+아래 순서로 확인해 주세요.
+
+```powershell
+# 1) 현재 위치 확인
+pwd
+
+# 2) 현재 폴더에 scripts가 있는지 확인
+Get-ChildItem
+
+# 3) scripts 폴더 안에 run_demo.py가 있는지 확인
+Get-ChildItem .\scripts
+```
+
+`run_demo.py`가 안 보이면 보통 아래 둘 중 하나입니다.
+
+1) 잘못된 폴더에 들어와 있음
+```powershell
+cd C:\work\claw-empire
+```
+
+2) 저장소를 아직 안 받았거나, 다른 이름으로 클론함
+```powershell
+cd C:\work
+git clone https://github.com/GreenSheep01201/claw-empire.git
+cd claw-empire
+```
+
+그 다음 다시 실행:
+
+```powershell
+$env:PYTHONPATH = "src"
+python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+
 ---
 
 ## 8) 시스템 구조
