@@ -234,7 +234,11 @@ PowerShell에서 키 자체 체크(앱 바깥 검증):
 
 ```powershell
 $env:OPENAI_API_KEY="sk-..."
-curl https://api.openai.com/v1/models -H "Authorization: Bearer $env:OPENAI_API_KEY"
+# PowerShell에서는 curl 별칭이 Invoke-WebRequest라서 헤더를 Hashtable로 넘겨야 합니다.
+Invoke-RestMethod -Uri "https://api.openai.com/v1/models" -Headers @{ Authorization = "Bearer $env:OPENAI_API_KEY" }
+
+# 또는 curl.exe를 강제 사용
+curl.exe https://api.openai.com/v1/models -H "Authorization: Bearer $env:OPENAI_API_KEY"
 ```
 
 - 여기서도 실패하면 키/프로젝트 제한 문제입니다.
