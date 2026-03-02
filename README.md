@@ -3,6 +3,29 @@
 
 ## 0) 제일 쉬운 자동 실행 (권장)
 
+### 0-1) 파일 없어도 가능한 초진단
+
+아래 명령은 **파일이 없어도** 실행됩니다.
+
+```powershell
+python -c "from pathlib import Path; import os; print('cwd=',Path.cwd()); print('run_demo.py=',(Path('run_demo.py').exists())); print('scripts/run_demo.py=',(Path('scripts/run_demo.py').exists())); print('scripts/auto_bootstrap.py=',(Path('scripts/auto_bootstrap.py').exists()))"
+```
+
+그리고 저장소 상태를 바로 확인하세요:
+
+```powershell
+git remote -v
+git branch
+git pull
+Get-ChildItem
+```
+
+또는 이 프로젝트에 포함된 진단 스크립트:
+
+```powershell
+python .\scripts\doctor.py
+```
+
 아래 한 줄만 실행하면, 가능한 방식(Python/Node)을 자동으로 찾아 실행합니다.
 
 ```powershell
@@ -252,6 +275,17 @@ python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런�
 ```
 
 이 스크립트는 순서대로 `run_demo.py` → `scripts/run_demo.py` → `npm run demo`를 자동 시도합니다.
+
+### Q10. auto_bootstrap.py도 없다고 나오면?
+그 경우는 현재 폴더가 우리가 수정한 코드가 있는 루트가 아닐 가능성이 큽니다.
+먼저 아래로 확인하세요.
+
+```powershell
+python .\scripts\doctor.py
+```
+
+`doctor.py`까지 없으면, 현재 로컬 폴더가 다른 브랜치/다른 저장소 상태입니다.
+그때는 `git remote -v`, `git branch`, `git pull` 결과를 확인한 뒤 다시 실행하세요.
 
 ---
 
