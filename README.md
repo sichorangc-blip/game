@@ -1,38 +1,40 @@
 # AI 비즈니스 운영팀 시스템 (Claw Empire 스타일)
 
 
-## 0) 제일 쉬운 자동 실행 (권장)
+## 0) 30초 긴급 복구 (파일 없다고 뜰 때)
 
-### 0-1) 파일 없어도 가능한 초진단
+에러가 `can't open file ...run_demo.py`이면, **명령 문제가 아니라 현재 폴더에 파일이 없는 상태**입니다.
 
-아래 명령은 **파일이 없어도** 실행됩니다.
-
-```powershell
-python -c "from pathlib import Path; import os; print('cwd=',Path.cwd()); print('run_demo.py=',(Path('run_demo.py').exists())); print('scripts/run_demo.py=',(Path('scripts/run_demo.py').exists())); print('scripts/auto_bootstrap.py=',(Path('scripts/auto_bootstrap.py').exists()))"
-```
-
-그리고 저장소 상태를 바로 확인하세요:
+아래 4줄을 먼저 그대로 실행하세요 (PowerShell):
 
 ```powershell
+pwd
 git remote -v
 git branch
-git pull
-Get-ChildItem
+python -c "from pathlib import Path; print('run_demo.py=',Path('run_demo.py').exists()); print('scripts/run_demo.py=',Path('scripts/run_demo.py').exists()); print('scripts/auto_bootstrap.py=',Path('scripts/auto_bootstrap.py').exists())"
 ```
 
-또는 이 프로젝트에 포함된 진단 스크립트:
+- 셋 다 `False`면: 지금 로컬 폴더가 우리가 안내한 코드 상태가 아닙니다.
+- 이 경우 **fresh 폴더 재클론이 최단 경로**입니다:
 
 ```powershell
-python .\scripts\doctor.py
+cd C:\work
+git clone https://github.com/GreenSheep01201/claw-empire.git claw-empire-fresh
+cd claw-empire-fresh
+python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
-아래 한 줄만 실행하면, 가능한 방식(Python/Node)을 자동으로 찾아 실행합니다.
+> 핵심: 같은 명령을 반복해도 파일이 없으면 절대 실행되지 않습니다. 먼저 파일 존재 여부를 확인해야 합니다.
+
+---
+
+## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
 python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
-> 지금처럼 `run_demo.py`가 없다고 나오는 경우에도, 자동으로 `scripts/run_demo.py` 또는 `npm run demo`를 시도합니다.
+`run_demo.py` → `scripts/run_demo.py` → `npm run demo` 순서로 자동 시도합니다.
 
 ---
 
