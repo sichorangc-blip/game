@@ -1,0 +1,10 @@
+{
+  "name": "ai-team-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Node-friendly runner for Python-based AI team system",
+  "scripts": {
+    "demo": "node scripts/run_demo_node.mjs",
+    "demo:pet": "node scripts/run_demo_node.mjs --goal \"신규 반려동물 간식 브랜드 런칭\""
+  }
+}
