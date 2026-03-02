@@ -401,6 +401,26 @@ curl.exe http://localhost:8790/api/departments
 
 > 핵심: 팀/에이전트 생성 후에는 "현재 Pack/Department/Project" 필터가 맞아야 Task의 Assignee에 나타납니다.
 
+
+#### 빠른 답변: 새로고침 vs 재실행
+
+- **대부분은 새로고침으로 해결**됩니다. (`Ctrl+F5` 후 Task 모달 재오픈)
+- 아래 조건이면 **웹앱/백엔드 재실행이 필요**합니다.
+  - `curl.exe http://localhost:8790/api/agents` 자체가 실패
+  - Settings의 API/CLI 상태가 `Disconnected` 또는 `Offline`
+  - Pack/Department를 맞춰도 Assignee가 계속 빈 상태
+
+#### 여전히 Task 탭에 내가 만든 부서/에이전트가 안 보일 때(실전 체크 30초)
+
+1. **Agents 탭에서 생성 확인**: 방금 만든 에이전트가 목록에 실제 존재하는지
+2. **같은 Office Pack인지 확인**: 생성한 Pack과 Task 생성 중인 Pack이 같아야 함
+3. **Task 필터 고정 해제**: Department를 `-- All --`로 두지 말고 해당 부서를 직접 선택
+4. **Project 먼저 선택/생성**: 프로젝트가 비어 있으면 Assignee 리스트가 비는 UI가 있음
+5. **강력 새로고침 후 재오픈**: Task 모달을 닫고 `Ctrl+F5` 후 다시 열기
+6. **마지막 수단으로 재실행**: 0-9 절차로 앱 재기동
+
+> 현상 설명: 생성은 성공했는데 Task에서 안 보이는 경우, 실제로는 데이터 누락보다 **현재 화면 필터/캐시 불일치**인 경우가 가장 많습니다.
+
 ---
 
 ## 0-1) 자동 실행 (파일이 있을 때)
