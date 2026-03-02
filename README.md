@@ -178,6 +178,26 @@ python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
 
+
+### Q7. 그럼 처음부터 다시하면 돼?
+네, 가장 빠른 해결은 **작업 폴더 하나 새로 만들어서 다시 클론 후 실행**하는 겁니다.
+
+```powershell
+cd C:\work
+# (선택) 기존 폴더가 꼬였으면 이름 변경/삭제
+# Rename-Item .\claw-empire claw-empire-old
+
+git clone https://github.com/GreenSheep01201/claw-empire.git
+cd claw-empire
+
+python --version
+$env:PYTHONPATH = "src"
+python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+위 순서로 하면 경로 꼬임 문제를 거의 100% 피할 수 있습니다.
+
+
 ---
 
 ## 8) 시스템 구조
