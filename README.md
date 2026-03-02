@@ -333,6 +333,47 @@ pnpm dev
 
 ---
 
+
+### 0-10) "리서처가 없고 봇이 편집을 못할 때" 즉시 대처
+
+지금 상태는 보통 아래 두 가지가 동시에 걸린 경우입니다.
+
+1. Agent에 편집 권한(도구 권한) 미할당
+2. 전용 `Researcher` 역할이 없는 Office Pack 구성
+
+#### A. 편집이 안 되는 봇 복구
+
+1. Office > Agents 탭에서 에이전트 클릭
+2. CLI Tool = `Codex CLI` 확인
+3. Tool/Permission에서 편집 권한 활성화(파일 편집/실행 권한)
+4. 저장 후 해당 에이전트에게 테스트 Task 1개 할당
+
+#### B. 리서처가 없을 때 역할 대체 매핑
+
+전용 리서처가 없어도 아래처럼 바로 운영 가능합니다.
+
+- `Research Strategy` 부서 인원 → 리서처 역할로 사용
+- `Planning` 인원 → 시장조사/경쟁사 분석 보조
+- `Fact Check` 인원 → 자료 검증/근거 확인 담당
+
+#### C. 바로 생성할 리서치 Task 3개
+
+1) `경쟁사 10개 가격/리뷰 분석`
+- Department: Research Strategy
+- Assignee: Research Strategy 인원 1명
+
+2) `핵심 고객 페르소나 3종 작성`
+- Department: Planning
+- Assignee: Planning 인원 1명
+
+3) `시장 데이터 출처 검증`
+- Department: Fact Check
+- Assignee: Fact Check 인원 1명
+
+> 핵심: 전용 직함이 없어도 부서 인원을 "역할로 재매핑"하면 바로 시작할 수 있습니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
