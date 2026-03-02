@@ -374,6 +374,35 @@ pnpm dev
 
 ---
 
+### 0-11) 팀/에이전트를 만들었는데 Task 생성창에 반영이 안 될 때
+
+이 증상은 보통 **생성 데이터는 저장됐지만 Task 모달 목록 캐시가 갱신되지 않은 상태**입니다.
+
+해결 순서:
+
+1. Agents 탭에서 새 에이전트가 실제로 보이는지 먼저 확인
+2. Office Pack 드롭다운에서 현재 작업 중인 Pack이 맞는지 재확인
+3. 브라우저 강력 새로고침(`Ctrl+F5`) 후 Task 모달 다시 열기
+4. Settings > API/CLI 상태가 `Connected/Live`인지 확인
+5. Task 모달에서 `Department`를 `-- All --`이 아니라 실제 부서로 선택
+6. `Project Name`이 비어 있으면 먼저 Project Manager에서 프로젝트 1개 생성
+7. 그래도 Assignee가 비면, 앱 재시작(0-9 절차) 후 재시도
+
+빠른 점검 명령(서버 상태):
+
+```powershell
+# API 살아있는지 확인
+curl.exe http://localhost:8790/api/agents
+curl.exe http://localhost:8790/api/departments
+```
+
+- 응답이 오면 UI 캐시/필터 문제 가능성이 큽니다.
+- 응답이 실패하면 백엔드 연결 문제이므로 0-9 재시작 절차를 먼저 수행하세요.
+
+> 핵심: 팀/에이전트 생성 후에는 "현재 Pack/Department/Project" 필터가 맞아야 Task의 Assignee에 나타납니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
