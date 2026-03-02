@@ -421,6 +421,31 @@ curl.exe http://localhost:8790/api/departments
 
 > 현상 설명: 생성은 성공했는데 Task에서 안 보이는 경우, 실제로는 데이터 누락보다 **현재 화면 필터/캐시 불일치**인 경우가 가장 많습니다.
 
+#### 현재 화면처럼 "Office엔 보이는데 Task엔 안 보임"일 때 (정밀 진단)
+
+스크린샷 패턴상 아래 2개가 가장 유력합니다.
+
+- **Pack 불일치**: Task 모달 우측 상단 Pack이 `[Temp(1)]`로 보이면, Office에서 편집한 Pack과 다를 수 있습니다.
+- **Department 명칭 불일치**: Office에는 `maketing`(철자)인데, Task 드롭다운에는 `Planning/Development/Design...`만 보이면 현재 Task가 다른 부서 세트를 보고 있는 상태입니다.
+
+즉시 해결 순서:
+
+1. Task 모달 우측 상단 Pack을 Office에서 작업한 Pack과 **동일하게 선택**
+2. Department에서 `-- All --`이 아닌 실제 대상 부서를 직접 선택
+3. Project Name을 먼저 선택(없으면 1개 생성)
+4. 모달 닫기 → `Ctrl+F5` → 모달 재오픈
+5. 그래도 안 되면 0-9 재시작 후 재확인
+
+실패 시 확인용 API:
+
+```powershell
+curl.exe http://localhost:8790/api/departments
+curl.exe http://localhost:8790/api/agents
+```
+
+- API에 부서/에이전트가 보이면 **UI 상태 동기화 문제**입니다.
+- API에도 없으면 **저장/연결 문제**이므로 재시작 후 다시 생성해야 합니다.
+
 ---
 
 ## 0-1) 자동 실행 (파일이 있을 때)
