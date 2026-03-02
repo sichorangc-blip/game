@@ -6,7 +6,7 @@ const goalFlagIndex = args.indexOf('--goal');
 
 const forwardedArgs = [...args];
 if (goalFlagIndex === -1) {
-  forwardedArgs.push('--goal', '신규 반려동물 간식 브랜드 런칭');
+  forwardedArgs.push('--goal', '신규 가습마스크 브랜드 런칭');
 }
 
 const result = spawnSync(

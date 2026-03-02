@@ -23,7 +23,7 @@ def run(cmd: list[str], cwd: Path) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="자동 실행 도우미")
-    parser.add_argument("--goal", default="신규 반려동물 간식 브랜드 런칭")
+    parser.add_argument("--goal", default="신규 가습마스크 브랜드 런칭")
     parser.add_argument("--save", default="docs/sample_report.json")
     args = parser.parse_args()
 

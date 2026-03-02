@@ -76,9 +76,9 @@ python --version
 
 ```powershell
 $env:PYTHONPATH = "src"
-python run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+python run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 # 또는
-python .\scripts\run_demo.py --goal "신규 반려동물 간식 브랜드 런칭"
+python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
 결과는 콘솔에 출력되고 기본적으로 `docs/sample_report.json`에 저장됩니다.
@@ -88,7 +88,7 @@ python .\scripts\run_demo.py --goal "신규 반려동물 간식 브랜드 런칭
 ## 4) 실행 방법 B (PowerShell 전용 스크립트)
 
 ```powershell
-.\scripts\run_demo.ps1 -Goal "신규 반려동물 간식 브랜드 런칭"
+.\scripts\run_demo.ps1 -Goal "신규 가습마스크 브랜드 런칭"
 ```
 
 저장 위치 지정:

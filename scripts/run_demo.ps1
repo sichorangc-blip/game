@@ -1,6 +1,6 @@
 param(
   [Parameter(Mandatory=$false)]
-  [string]$Goal = "신규 반려동물 간식 브랜드 런칭",
+  [string]$Goal = "신규 가습마스크 브랜드 런칭",
 
   [Parameter(Mandatory=$false)]
   [string]$Save = "docs/sample_report.json"

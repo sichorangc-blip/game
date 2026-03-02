@@ -7,7 +7,7 @@ from .orchestrator import TeamOrchestrator
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="AI 비즈니스 운영팀 데모 실행")
-    parser.add_argument("--goal", required=True, help="예: 신규 고양이 사료 브랜드 런칭")
+    parser.add_argument("--goal", required=True, help="예: 신규 가습마스크 브랜드 런칭")
     parser.add_argument(
         "--save",
         default="docs/sample_report.json",
