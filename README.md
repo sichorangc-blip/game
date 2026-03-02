@@ -1,5 +1,18 @@
 # AI 비즈니스 운영팀 시스템 (Claw Empire 스타일)
 
+
+## 0) 제일 쉬운 자동 실행 (권장)
+
+아래 한 줄만 실행하면, 가능한 방식(Python/Node)을 자동으로 찾아 실행합니다.
+
+```powershell
+python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+> 지금처럼 `run_demo.py`가 없다고 나오는 경우에도, 자동으로 `scripts/run_demo.py` 또는 `npm run demo`를 시도합니다.
+
+---
+
 이 저장소는 여러 역할의 AI 봇이 협업하여 다음 업무를 자동화/반자동화하도록 설계된 **멀티 에이전트 운영 시스템**입니다.
 
 - 시장조사
@@ -226,6 +239,19 @@ python run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 ```
 
 `python run_demo.py`는 루트 실행 파일이라 `PYTHONPATH`를 직접 안 넣어도 동작하도록 구성되어 있습니다.
+
+
+
+### Q9. `run_demo.py`가 아예 없는데요?
+정상일 수 있습니다. 저장소마다 엔트리포인트 이름이 다릅니다.
+
+그래서 아래 명령으로 자동 탐지 실행하세요.
+
+```powershell
+python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+이 스크립트는 순서대로 `run_demo.py` → `scripts/run_demo.py` → `npm run demo`를 자동 시도합니다.
 
 ---
 
