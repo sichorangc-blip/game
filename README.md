@@ -28,6 +28,41 @@ python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런�
 
 ---
 
+
+### 0-2) 방금 보내주신 상태 해석 (main 브랜치)
+
+아래 상태면 원인 99%는 **브랜치/커밋 불일치**입니다.
+
+- `git remote -v`는 정상
+- `git branch`가 `main`
+- 그런데 `run_demo.py`, `scripts/run_demo.py`, `scripts/auto_bootstrap.py`가 없음
+
+즉, 현재 로컬 `main`에는 데모 실행 파일 변경이 아직 없습니다.
+
+즉시 복구 명령:
+
+```powershell
+cd C:\work\claw-empire
+git pull origin main
+python -c "from pathlib import Path; print(Path('run_demo.py').exists(), Path('scripts/run_demo.py').exists(), Path('scripts/auto_bootstrap.py').exists())"
+```
+
+- 결과가 여전히 `False False False`면: 이 기능은 아직 `main`에 머지되지 않은 상태입니다.
+- 이 경우에는 해당 기능이 포함된 브랜치를 체크아웃해서 실행해야 합니다.
+
+```powershell
+# 예시: 기능 브랜치가 있다면
+git fetch --all
+git branch -a
+# origin/<feature-branch> 확인 후
+git checkout -b ai-demo origin/<feature-branch>
+python .\scripts\auto_bootstrap.py --goal "신규 가습마스크 브랜드 런칭"
+```
+
+> 참고: PowerShell에서 긴 명령이 중간에 끊기면 출력이 안 보일 수 있습니다. 위 한 줄을 그대로 복붙하세요.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
