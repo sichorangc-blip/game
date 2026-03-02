@@ -296,6 +296,35 @@ python .\scripts\api_probe.py --origin http://localhost:8000
 
 ---
 
+### 0-9) 앱이 꼬였을 때 재시작(Windows PowerShell)
+
+Provider가 삭제/저장이 안 되거나 상태가 안 바뀌면, 보통 서버 프로세스가 꼬인 상태입니다.
+
+```powershell
+# 1) 실행 중인 dev 서버 중지 (실행 창에서 Ctrl+C)
+
+# 2) 포트 점유 프로세스 강제 종료
+netstat -ano | findstr :8000
+netstat -ano | findstr :8790
+# 마지막 PID를 확인해서 종료
+Stop-Process -Id <PID> -Force
+
+# 3) 프로젝트 루트에서 재실행
+cd C:\work\claw-empire
+pnpm dev
+# (또는) npm run dev
+```
+
+여전히 상태가 이상하면 브라우저 캐시를 비우고 다시 접속:
+
+```powershell
+# 브라우저에서 Ctrl+F5
+```
+
+그 다음 Settings > API에서 새 provider를 `+ Add`로 다시 생성하고 Test를 눌러 확인하세요.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
