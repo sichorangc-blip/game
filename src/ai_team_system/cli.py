@@ -13,10 +13,22 @@ def main() -> None:
         default="docs/sample_report.json",
         help="결과 JSON 저장 경로",
     )
+    parser.add_argument(
+        "--chat",
+        action="store_true",
+        help="실행 과정을 채팅형 로그로 출력",
+    )
     args = parser.parse_args()
 
     orchestrator = TeamOrchestrator()
-    report = orchestrator.run(args.goal)
+
+    def on_progress(message: str) -> None:
+        print(f"[CHAT] {message}")
+
+    report = orchestrator.run(
+        args.goal,
+        progress_callback=on_progress if args.chat else None,
+    )
 
     output_path = Path(args.save)
     output_path.parent.mkdir(parents=True, exist_ok=True)

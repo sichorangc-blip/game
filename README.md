@@ -483,6 +483,12 @@ python .\scripts\run_demo.py --goal "신규 가습마스크 브랜드 런칭"
 
 결과는 콘솔에 출력되고 기본적으로 `docs/sample_report.json`에 저장됩니다.
 
+진행 로그(채팅형 피드백)가 필요하면 `--chat` 옵션을 붙이세요:
+
+```powershell
+python run_demo.py --goal "신규 가습마스크 브랜드 런칭" --chat
+```
+
 ---
 
 ## 4) 실행 방법 B (PowerShell 전용 스크립트)
