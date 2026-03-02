@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Diagnose common 'file not found' issues for local runs."""
+"""Diagnose common setup issues for local runs and CLI-tool readiness."""
 
 from __future__ import annotations
 
-import os
 import platform
+import shutil
 from pathlib import Path
 
 
@@ -19,6 +19,8 @@ CHECKS = [
     "scripts/auto_bootstrap.py",
 ]
 
+CLI_BINS = ["node", "npm", "pnpm", "codex", "claude", "gemini", "opencode"]
+
 
 def main() -> int:
     print("[doctor] platform:", platform.platform())
@@ -32,6 +34,10 @@ def main() -> int:
         print(f"  - {rel}: {'OK' if exists else 'MISSING'}")
         if not exists:
             missing.append(rel)
+
+    print("\n[doctor] cli binaries:")
+    for name in CLI_BINS:
+        print(f"  - {name}: {'FOUND' if shutil.which(name) else 'MISSING'}")
 
     if missing:
         print("\n[doctor] 일부 파일이 없습니다.")

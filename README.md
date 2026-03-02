@@ -129,6 +129,49 @@ npm run dev
 
 ---
 
+### 0-5) "CLI 설치" 버튼이 비활성화일 때 (지금 질문)
+
+이 경우는 보통 아래 3가지입니다.
+
+1. 브라우저 UI 권한만 있고, 실제 호스트 머신에 CLI 설치 권한이 없음
+2. CLI 자동설치 기능이 꺼진 배포 모드
+3. 설치 대상 바이너리(node/pnpm/codex 등) 미설치
+
+먼저 진단:
+
+```powershell
+python .\scripts\doctor.py
+```
+
+다음으로 수동 설치(Windows PowerShell):
+
+```powershell
+# Node 계열
+winget install OpenJS.NodeJS.LTS
+npm install -g pnpm
+
+# 예시: Codex CLI
+npm install -g @openai/codex
+```
+
+설치 후:
+
+```powershell
+where node
+where npm
+where pnpm
+where codex
+```
+
+그 다음 웹 UI에서:
+1) Settings > CLI Tools > Refresh
+2) Agent 클릭 > CLI Tool을 방금 설치한 항목으로 지정
+3) 다시 Office 화면에서 Connected 숫자 증가 확인
+
+> 핵심: 버튼이 비활성화면 UI에서 설치 못 합니다. 서버/PC 터미널에서 수동 설치 후 Refresh해야 합니다.
+
+---
+
 ## 0-1) 자동 실행 (파일이 있을 때)
 
 ```powershell
